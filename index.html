@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMC Executive Dashboard (2568 - 2569) | Mission BOSS style</title>
+  <!-- Google Fonts for Google Sans and Sarabun (exact link provided by user) -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.2">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <!-- Brand logo (Mission BOSS style) -->
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <div class="brand-name">
+            <h2>DMC Vision</h2>
+            <p>สพม.สกลนคร</p>
+          </div>
+        </div>
+
+        <!-- Navigation Menu (Modern SVG Icons instead of emojis) -->
+        <ul class="nav-menu">
+          <li class="nav-item active" id="menuDashboard">
+            <a href="#">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="9"></rect>
+                  <rect x="14" y="3" width="7" height="5"></rect>
+                  <rect x="14" y="12" width="7" height="9"></rect>
+                  <rect x="3" y="16" width="7" height="5"></rect>
+                </svg>
+              </span>
+              <span>แดชบอร์ด</span>
+            </a>
+          </li>
+          <li class="nav-item" id="menuStudents">
+            <a href="#">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <span>สถิตินักเรียน</span>
+            </a>
+          </li>
+          <li class="nav-item" id="menuClassrooms">
+            <a href="#">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </span>
+              <span>สถิติห้องเรียน</span>
+            </a>
+          </li>
+          <li class="nav-item" id="menuAnalytics">
+            <a href="#">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </span>
+              <span>วิเคราะห์รายเขต</span>
+            </a>
+          </li>
+          <li class="nav-item" id="menuSettings">
+            <a href="#">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+              </span>
+              <span>ตั้งค่าระบบ</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Bottom Profile Card (Mission BOSS style) -->
+      <div class="sidebar-bottom">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="profile-info">
+            <h4>ผู้บริหาร สพม.</h4>
+            <p><span class="status-dot"></span> ONLINE</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Search & Controls -->
+      <div class="top-bar" id="topSection">
+        <div class="search-box">
+          <input type="text" id="topSearchInput" placeholder="ค้นหา...">
+        </div>
+        <div class="top-bar-right">
+          <button class="top-icon-btn" title="การแจ้งเตือน">🔔</button>
+          <div class="user-profile-avatar">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Title & Action Buttons -->
+      <div class="page-title-row">
+        <div class="page-title">
+          <h1>Dashboard</h1>
+          <p>ภาพรวมภารกิจข้อมูลสถิตินักเรียนและห้องเรียน ปีการศึกษา 2568 - 2569</p>
+        </div>
+        <div class="page-actions">
+          <!-- School Selector Dropdown -->
+          <select id="schoolSelector" class="control-select">
+            <option value="ALL">ภาพรวมทั้งหมด (45 โรงเรียน)</option>
+          </select>
+          
+          <!-- Level Selector Tabs -->
+          <div class="tab-group" id="levelTabs">
+            <button class="tab-control-btn active" data-level="ALL">ทั้งหมด</button>
+            <button class="tab-control-btn" data-level="มต้น">ม.ต้น</button>
+            <button class="tab-control-btn" data-level="มปลาย">ม.ปลาย</button>
+          </div>
+
+          <!-- Refresh Button -->
+          <button class="btn-refresh" id="btnRefresh" title="รีเฟรชข้อมูล">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+          </button>
+
+          <!-- Blue Button (Mission BOSS style) -->
+          <button class="btn-primary" id="btnExport">
+            <span>+ ส่งออกรายงาน PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Overview Cards (Modern Minimal SVG Icons instead of emojis) -->
+      <section class="kpi-row" id="kpiSection">
+        
+        <!-- Card 1: Total Schools -->
+        <div class="kpi-card" id="kpiCardSchools">
+          <div class="kpi-icon-circle blue">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <div class="kpi-info-block">
+            <h4>โรงเรียนทั้งหมด</h4>
+            <span class="main-val" id="kpi-schools-val">45</span>
+            <span class="unit-val">แห่ง</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Total Students -->
+        <div class="kpi-card" id="kpiCardStudents">
+          <div class="kpi-icon-circle green">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="kpi-info-block">
+            <h4>นักเรียนทั้งหมด</h4>
+            <span class="main-val" id="kpi-students-val">0</span>
+            <span class="unit-val">คน (ปี 2569)</span>
+          </div>
+          <div class="kpi-trend-wrapper">
+            <span class="trend-badge" id="badge-students">0.0%</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Total Classrooms -->
+        <div class="kpi-card" id="kpiCardRooms">
+          <div class="kpi-icon-circle red">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <div class="kpi-info-block">
+            <h4>ห้องเรียนทั้งหมด</h4>
+            <span class="main-val" id="kpi-rooms-val">0</span>
+            <span class="unit-val">ห้อง (ปี 2569)</span>
+          </div>
+          <div class="kpi-trend-wrapper">
+            <span class="trend-badge" id="badge-rooms">0.0%</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Classroom Density -->
+        <div class="kpi-card" id="kpiCardDensity">
+          <div class="kpi-icon-circle yellow">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="9" x2="15" y2="9"></line>
+              <line x1="9" y1="13" x2="15" y2="13"></line>
+              <line x1="9" y1="17" x2="13" y2="17"></line>
+            </svg>
+          </div>
+          <div class="kpi-info-block">
+            <h4>ความหนาแน่นเฉลี่ย</h4>
+            <span class="main-val" id="kpi-density-val">0.0</span>
+            <span class="unit-val">คน / ห้อง</span>
+          </div>
+          <div class="kpi-trend-wrapper">
+            <span class="trend-badge" id="badge-density">0.0</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Visualizations Grid (8 columns + 4 columns) -->
+      <section class="vis-row" id="chartsSection">
+        
+        <!-- Left Panel: Line Area Chart (8 columns) -->
+        <div class="card-panel" id="studentsChartPanel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>สถิตินักเรียนเปรียบเทียบรายระดับชั้น</h3>
+              <p>เปรียบเทียบแนวโน้มจำนวนนักเรียนระดับชั้น ม.1 - ม.6 ปีการศึกษา 2568 และ 2569</p>
+            </div>
+            <div class="panel-legend">
+              <div class="legend-item">
+                <span class="legend-color y68"></span>
+                <span>ปี 2568</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color y69"></span>
+                <span>ปี 2569</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-area">
+            <canvas id="mainLineChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Right Panel: Alerts & Insights Panel (4 columns) -->
+        <div class="card-panel" id="insightsPanel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>รายงานระบบและการแจ้งเตือน</h3>
+              <p>วิเคราะห์ความเปลี่ยนแปลงเชิงลึกเปรียบเทียบ 2 ปี</p>
+            </div>
+          </div>
+          
+          <div class="alerts-list">
+            <!-- Active/Live status bar (Light Green) -->
+            <div class="status-box" id="statusBox">
+              <span class="status-indicator"></span>
+              <span>เชื่อมโยงระบบข้อมูลสำเร็จ</span>
+            </div>
+            
+            <!-- Dynamic warning alerts (Light Red background, red text) -->
+            <div class="alert-box" id="alertBox">
+              <div class="alert-box-header">🚨 รายการแจ้งเตือนสถิติวิกฤต</div>
+              <div id="alertsContainer">
+                <!-- Populated dynamically by app.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Schools Progress list -->
+          <div class="progress-list">
+            <h4>โรงเรียนที่มีนักเรียนสูงสุด 5 อันดับแรก</h4>
+            <div id="topSchoolsList">
+              <!-- Dynamically populated progress bars -->
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Table Panel -->
+      <section class="table-panel" id="tableSection">
+        <div class="table-controls">
+          <div class="panel-title">
+            <h3>ตารางวิเคราะห์เปรียบเทียบรายโรงเรียน</h3>
+            <p>ตารางเปรียบเทียบข้อมูลจำนวนนักเรียน ห้องเรียน และความหนาแน่น สามารถค้นหาและจัดเรียงได้ตามต้องการ</p>
+          </div>
+          <div class="table-filter-search">
+            <input type="text" id="tableSearchInput" placeholder="ค้นหาโรงเรียน...">
+          </div>
+        </div>
+
+        <div class="responsive-table-wrapper">
+          <table class="dashboard-table" id="schoolTable">
+            <thead>
+              <tr>
+                <th data-sort="index">ลำดับ</th>
+                <th data-sort="name">ชื่อโรงเรียน ↕</th>
+                <th data-sort="std68">นักเรียน 2568 ↕</th>
+                <th data-sort="std69">นักเรียน 2569 ↕</th>
+                <th data-sort="change">การเปลี่ยนแปลง (%) ↕</th>
+                <th data-sort="room68">ห้องเรียน 2568 ↕</th>
+                <th data-sort="room69">ห้องเรียน 2569 ↕</th>
+                <th data-sort="ratio68">นร./ห้อง 2568 ↕</th>
+                <th data-sort="ratio69">นร./ห้อง 2569 ↕</th>
+              </tr>
+            </thead>
+            <tbody id="schoolTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer-row">
+        <p>รายงานเชิงสารสนเทศวิเคราะห์สถิตินักเรียน DMC © 2026 สพม.สกลนคร</p>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- Settings Modal (New interactive element) -->
+  <div id="settingsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>ตั้งค่าระบบแดชบอร์ด</h3>
+        <button id="closeSettingsBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label>โทนสีเน้นย้ำระบบ (System Theme Accent)</label>
+          <div class="color-options">
+            <span class="color-dot blue active" data-color="blue" style="background: #1a73e8;" title="Google Blue"></span>
+            <span class="color-dot green" data-color="green" style="background: #137333;" title="Google Green"></span>
+            <span class="color-dot red" data-color="red" style="background: #c5221f;" title="Google Red"></span>
+            <span class="color-dot orange" data-color="orange" style="background: #b06000;" title="Google Orange"></span>
+            <span class="color-dot purple" data-color="purple" style="background: #7627cf;" title="Royal Purple"></span>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="settingGridlines" checked> แสดงเส้นตารางเบื้องหลังกราฟ (Gridlines)
+          </label>
+        </div>
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="settingAlertBox" checked> แสดงกรอบแจ้งเตือนสถิติวิกฤต (Alert Panel)
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Inclusions -->
+  <script src="data.js?v=1.2"></script>
+  <script src="app.js?v=1.2"></script>
+</body>
+</html>
