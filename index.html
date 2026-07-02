@@ -110,11 +110,21 @@
       </div>
     </aside>
 
+    <!-- Sidebar Backdrop for Mobile (New interactive element) -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- Main Content Area -->
     <main class="main-content">
       
       <!-- Top Search & Controls -->
       <div class="top-bar" id="topSection">
+        <button class="menu-toggle-btn" id="menuToggleBtn" title="เมนู">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <div class="search-box">
           <input type="text" id="topSearchInput" placeholder="ค้นหา...">
         </div>
@@ -317,15 +327,16 @@
           <table class="dashboard-table" id="schoolTable">
             <thead>
               <tr>
-                <th data-sort="index">ลำดับ</th>
-                <th data-sort="name">ชื่อโรงเรียน ↕</th>
-                <th data-sort="std68">นักเรียน 2568 ↕</th>
-                <th data-sort="std69">นักเรียน 2569 ↕</th>
-                <th data-sort="change">การเปลี่ยนแปลง (%) ↕</th>
-                <th data-sort="room68">ห้องเรียน 2568 ↕</th>
-                <th data-sort="room69">ห้องเรียน 2569 ↕</th>
-                <th data-sort="ratio68">นร./ห้อง 2568 ↕</th>
-                <th data-sort="ratio69">นร./ห้อง 2569 ↕</th>
+                <th class="col-toggle" style="width: 40px; text-align: center;"></th>
+                <th data-sort="index" class="col-seq">ลำดับ</th>
+                <th data-sort="name" class="col-name">ชื่อโรงเรียน ↕</th>
+                <th data-sort="std68" class="col-std68">นักเรียน 2568 ↕</th>
+                <th data-sort="std69" class="col-std69">นักเรียน 2569 ↕</th>
+                <th data-sort="change" class="col-change">การเปลี่ยนแปลง (%) ↕</th>
+                <th data-sort="room68" class="col-room68">ห้องเรียน 2568 ↕</th>
+                <th data-sort="room69" class="col-room69">ห้องเรียน 2569 ↕</th>
+                <th data-sort="ratio68" class="col-ratio68">นร./ห้อง 2568 ↕</th>
+                <th data-sort="ratio69" class="col-ratio69">นร./ห้อง 2569 ↕</th>
               </tr>
             </thead>
             <tbody id="schoolTableBody">
@@ -344,14 +355,16 @@
 
   </div>
 
-  <!-- Settings Modal (New interactive element) -->
+  <!-- Settings Modal (Interactive Executive Policy Control Center) -->
   <div id="settingsModal" class="modal-overlay" style="display: none;">
     <div class="modal-card">
       <div class="modal-header">
-        <h3>ตั้งค่าระบบแดชบอร์ด</h3>
+        <h3>ตั้งค่าควบคุมระบบนโยบายแดชบอร์ด</h3>
         <button id="closeSettingsBtn" class="modal-close-btn">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+        
+        <!-- Toggle Accent Color -->
         <div class="settings-group">
           <label>โทนสีเน้นย้ำระบบ (System Theme Accent)</label>
           <div class="color-options">
@@ -362,16 +375,73 @@
             <span class="color-dot purple" data-color="purple" style="background: #7627cf;" title="Royal Purple"></span>
           </div>
         </div>
+
+        <!-- Main Chart Metric Selector -->
         <div class="settings-group">
-          <label>
+          <label for="settingChartMetric">ประเภทข้อมูลแสดงบนกราฟหลัก</label>
+          <select id="settingChartMetric" class="control-select" style="min-width: 100%; width: 100%; margin-top: 4px;">
+            <option value="students">จำนวนนักเรียนรวมทั้งหมด (คน)</option>
+            <option value="rooms">จำนวนห้องเรียนรวมทั้งหมด (ห้อง)</option>
+            <option value="density">ความหนาแน่นเฉลี่ยของนักเรียน (คน/ห้อง)</option>
+          </select>
+        </div>
+
+        <!-- Sliders for Policy Simulation -->
+        <div class="settings-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <label for="settingDeclineThreshold">เกณฑ์นักเรียนลดสะสมวิกฤต</label>
+            <span id="labelDeclineThreshold" style="font-weight: 700; color: var(--color-error);">-6.5%</span>
+          </div>
+          <input type="range" id="settingDeclineThreshold" min="2" max="15" step="0.5" value="6.5" style="width: 100%; margin-top: 4px; cursor: pointer;">
+        </div>
+
+        <div class="settings-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <label for="settingDensityThreshold">เกณฑ์เฉลี่ยความแออัดวิกฤต</label>
+            <span id="labelDensityThreshold" style="font-weight: 700; color: var(--color-error);">37.0 คน/ห้อง</span>
+          </div>
+          <input type="range" id="settingDensityThreshold" min="20" max="45" step="1" value="37" style="width: 100%; margin-top: 4px; cursor: pointer;">
+        </div>
+
+        <!-- School Size Classification Filter -->
+        <div class="settings-group">
+          <label>ตัวกรองขนาดโรงเรียนตามเกณฑ์ สพฐ.</label>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 4px;">
+            <label style="font-weight: normal; font-size: 12.5px; cursor: pointer;">
+              <input type="checkbox" class="setting-school-size" value="S" checked> ขนาดเล็ก (< 120 คน)
+            </label>
+            <label style="font-weight: normal; font-size: 12.5px; cursor: pointer;">
+              <input type="checkbox" class="setting-school-size" value="M" checked> ขนาดกลาง (120-499 คน)
+            </label>
+            <label style="font-weight: normal; font-size: 12.5px; cursor: pointer;">
+              <input type="checkbox" class="setting-school-size" value="L" checked> ขนาดใหญ่ (500-1,499 คน)
+            </label>
+            <label style="font-weight: normal; font-size: 12.5px; cursor: pointer;">
+              <input type="checkbox" class="setting-school-size" value="XL" checked> ขนาดใหญ่พิเศษ (>= 1,500)
+            </label>
+          </div>
+        </div>
+
+        <!-- General Layout Checkboxes -->
+        <div class="settings-group">
+          <label style="cursor: pointer;">
             <input type="checkbox" id="settingGridlines" checked> แสดงเส้นตารางเบื้องหลังกราฟ (Gridlines)
           </label>
         </div>
+        
         <div class="settings-group">
-          <label>
+          <label style="cursor: pointer;">
             <input type="checkbox" id="settingAlertBox" checked> แสดงกรอบแจ้งเตือนสถิติวิกฤต (Alert Panel)
           </label>
         </div>
+
+        <!-- Dark Mode Switch -->
+        <div class="settings-group" style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px;">
+          <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700;">
+            <input type="checkbox" id="settingDarkMode"> 🌙 โหมดการนำเสนอในที่มืด (Dark Mode)
+          </label>
+        </div>
+
       </div>
     </div>
   </div>

@@ -836,7 +836,8 @@ table.dashboard-table tbody tr:hover {
 .modal-card {
   background-color: #ffffff;
   border-radius: var(--radius-lg);
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   border: 1px solid var(--border-color);
   overflow: hidden;
@@ -932,4 +933,383 @@ table.dashboard-table tbody tr:hover {
   50% { box-shadow: 0 0 15px rgba(26, 115, 232, 0.4); border-color: var(--color-primary); }
   100% { box-shadow: none; border-color: var(--border-color); }
 }
+
+/* --- Responsive & Mobile Layout Additions --- */
+
+/* Hide hamburger toggle by default on desktop */
+.menu-toggle-btn {
+  display: none;
+}
+
+/* Backdrop for sidebar drawer */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Media Query: Tablets & Mobile Devices (<= 992px) */
+@media (max-width: 992px) {
+  /* Sidebar transitions to slide-out drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Shift main content to cover full page width */
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 20px 24px;
+  }
+
+  /* Show mobile hamburger icon button */
+  .menu-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+  }
+
+  .menu-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .menu-toggle-btn svg {
+    display: block;
+  }
+
+  /* Align top-bar to accommodate the hamburger button */
+  .top-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .top-bar-right {
+    margin-left: auto;
+  }
+}
+
+/* Media Query: Small Screen & Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  /* Stack dashboard header elements vertically */
+  .page-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .page-title h1 {
+    font-size: 20px;
+  }
+
+  .page-title p {
+    font-size: 12.5px;
+  }
+
+  /* Stack actions, filter selectors, and buttons */
+  .page-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .control-select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .tab-group {
+    width: 100%;
+    display: flex;
+  }
+
+  .tab-control-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .btn-refresh {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+
+  /* Table Header Controls Alignment */
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .table-filter-search input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Lower chart panel height for compact view */
+  .chart-area {
+    height: 240px;
+  }
+
+  /* KPI Card adjustments */
+  .kpi-card {
+    padding: 14px 16px;
+  }
+
+  .kpi-info-block .main-val {
+    font-size: 20px;
+  }
+}
+
+/* Media Query: Extra Small Mobile Devices (<= 480px) */
+@media (max-width: 480px) {
+  .top-bar {
+    padding-bottom: 4px;
+  }
+
+  .search-box input {
+    min-width: 120px;
+    max-width: 160px;
+    padding: 8px 12px 8px 30px;
+  }
+
+  .search-box::before {
+    left: 10px;
+  }
+}
+
+/* --- Collapsible Responsive Table Styles --- */
+
+/* Default hide toggle column and button styling */
+.col-toggle {
+  display: none;
+}
+
+.row-toggle-btn {
+  background-color: var(--color-primary-light);
+  border: none;
+  color: var(--color-primary);
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition-fast);
+}
+
+.row-toggle-btn:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+/* Row states */
+tr.expanded {
+  background-color: #fcfdfe !important;
+}
+
+/* Default show for all table columns */
+.col-seq, .col-name, .col-std68, .col-std69, .col-change, .col-room68, .col-room69, .col-ratio68, .col-ratio69 {
+  display: table-cell;
+}
+
+/* Tablet Breakpoint (<= 1024px) */
+@media (max-width: 1024px) {
+  .col-toggle {
+    display: table-cell;
+  }
+  /* Hide minor columns on tablet */
+  .col-room68, .col-room69, .col-ratio68, .col-ratio69 {
+    display: none;
+  }
+  
+  /* Details Sub-row Styling */
+  tr.child-row {
+    background-color: #f8fafc !important;
+  }
+  
+  tr.child-row td {
+    padding: 0 !important;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .child-details-wrapper {
+    padding: 12px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    border-left: 4px solid var(--color-primary);
+    background-color: #f8fafc;
+    animation: childSlideIn 0.18s ease-out;
+  }
+  
+  @keyframes childSlideIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .child-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+  }
+  
+  .detail-label {
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  
+  .detail-val {
+    color: var(--text-main);
+  }
+}
+
+/* Mobile Breakpoint (<= 768px) */
+@media (max-width: 768px) {
+  /* On mobile, also hide std68 */
+  .col-std68 {
+    display: none;
+  }
+  
+  .child-details-wrapper {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+}
+
+/* --- Presentation Dark Mode Styles --- */
+
+body.dark-theme {
+  --bg-app: #121214;          /* Google dark app background */
+  --bg-sidebar: #1e1e24;      /* Google dark sidebar */
+  --bg-card: #1e1e24;         /* Google dark card */
+  --border-color: #3c4043;    /* Google dark border color */
+  
+  --text-main: #f1f3f4;       /* Google dark primary text */
+  --text-muted: #9aa0a6;      /* Google dark secondary text */
+  
+  --color-primary-light: rgba(26, 115, 232, 0.15);
+  --color-success-bg: rgba(19, 115, 51, 0.15);
+  --color-error-bg: rgba(197, 34, 31, 0.15);
+  --color-warning-bg: rgba(176, 96, 0, 0.15);
+}
+
+/* Specific UI Element overrides under Dark Mode */
+body.dark-theme select,
+body.dark-theme input[type="text"] {
+  background-color: #2e3033;
+  color: #f1f3f4;
+  border-color: #3c4043;
+}
+
+body.dark-theme input[type="range"] {
+  accent-color: var(--color-primary);
+}
+
+body.dark-theme .modal-card {
+  background-color: #1e1e24;
+  color: #f1f3f4;
+  border-color: #3c4043;
+}
+
+body.dark-theme .tab-group {
+  background-color: #2e3033;
+}
+
+body.dark-theme .tab-control-btn.active {
+  background-color: #1e1e24;
+  color: #f1f3f4;
+}
+
+body.dark-theme .profile-card,
+body.dark-theme .search-box input,
+body.dark-theme .btn-refresh:hover,
+body.dark-theme .nav-item a:hover {
+  background-color: #2e3033;
+  color: #f1f3f4;
+}
+
+body.dark-theme .nav-item.active a {
+  background-color: rgba(26, 115, 232, 0.2);
+  color: #8ab4f8; /* Google Sans Blue light */
+}
+
+body.dark-theme table.dashboard-table th {
+  background-color: #25262b;
+  color: #9aa0a6;
+}
+
+body.dark-theme table.dashboard-table tbody tr:hover {
+  background-color: #25262b;
+}
+
+body.dark-theme .child-details-wrapper {
+  background-color: #202124;
+}
+
+body.dark-theme .row-toggle-btn {
+  background-color: rgba(26, 115, 232, 0.2);
+  color: #8ab4f8;
+}
+
+body.dark-theme .row-toggle-btn:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+body.dark-theme footer-row {
+  color: var(--text-muted);
+}
+
+
+
 
